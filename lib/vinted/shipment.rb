@@ -9,23 +9,22 @@ module Vinted
       @str = str
     end
 
-
-    def valid_string?
+    def valid?
       valid_date? && str.match(MATCH_REGEXP).to_s === str
     end
 
     def shipment_date
-      return nil unless valid_string?
+      return nil unless valid?
       @shipment_date ||= Time.strptime(splitted_string[0], DATE_TIME_FORMAT)
     end
 
     def shipping_size
-      return nil unless valid_string?
+      return nil unless valid?
       splitted_string[1]
     end
 
     def shipping_provider
-      return nil unless valid_string?
+      return nil unless valid?
       splitted_string[2]
     end
 

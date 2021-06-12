@@ -1,36 +1,33 @@
 require "vinted/shipment"
 
 describe Vinted::Shipment do
-
-
-
-  describe ".valid_string?" do
+  describe ".valid?" do
     context "when provided invalid string" do
       it "returns valid as false" do
-        expect(Vinted::Shipment.new("aaaa").valid_string?).to eq(false)
-        expect(Vinted::Shipment.new("2015-02-29 CUSPS").valid_string?).to eq(false)
+        expect(Vinted::Shipment.new("aaaa").valid?).to eq(false)
+        expect(Vinted::Shipment.new("2015-02-29 CUSPS").valid?).to eq(false)
       end
     end
     context "when provided invalid date in string" do
       it "returns valid as false" do
-        expect(Vinted::Shipment.new("2015-22-10 L LP").valid_string?).to eq(false)
+        expect(Vinted::Shipment.new("2015-22-10 L LP").valid?).to eq(false)
       end
     end
     context "when provided invalid size in string" do
       it "returns valid as false" do
-        expect(Vinted::Shipment.new("2015-12-10 D LP").valid_string?).to eq(false)
+        expect(Vinted::Shipment.new("2015-12-10 D LP").valid?).to eq(false)
       end
     end
     context "when provided invalid Shipping provider in string" do
       it "returns valid as false" do
-        expect(Vinted::Shipment.new("2015-12-10 L LPS").valid_string?).to eq(false)
+        expect(Vinted::Shipment.new("2015-12-10 L LPS").valid?).to eq(false)
       end
     end
     context "when provided valid string" do
       it "returns valid as true" do
-        expect(Vinted::Shipment.new("2015-02-10 L LP").valid_string?).to eq(true)
-        expect(Vinted::Shipment.new("2015-02-10 S MR").valid_string?).to eq(true)
-        expect(Vinted::Shipment.new("2015-02-10 M MR").valid_string?).to eq(true)
+        expect(Vinted::Shipment.new("2015-02-10 L LP").valid?).to eq(true)
+        expect(Vinted::Shipment.new("2015-02-10 S MR").valid?).to eq(true)
+        expect(Vinted::Shipment.new("2015-02-10 M MR").valid?).to eq(true)
       end
     end
   end
@@ -61,5 +58,4 @@ describe Vinted::Shipment do
       end
     end
   end
-
 end
