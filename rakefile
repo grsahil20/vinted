@@ -1,5 +1,9 @@
+require './lib/vinted'
 require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec)
 
+task :run do
+  Vinted.run(file_name: ARGV[1])
+end
 
 task :test => :spec
