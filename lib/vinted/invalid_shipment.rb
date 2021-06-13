@@ -9,8 +9,5 @@ module Vinted
       false
     end
 
-    def print
-      str
-    end
   end
 end
