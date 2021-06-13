@@ -8,5 +8,9 @@ module Vinted
     def valid?
       false
     end
+
+    def print
+      str
+    end
   end
 end
