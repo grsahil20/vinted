@@ -19,6 +19,11 @@ module Vinted
     end
     alias_method :date, :shipment_date
 
+    def shipment_month
+      @shipment_month ||= shipment_date.month
+    end
+    alias_method :month, :shipment_month
+
     def shipping_size
       @shipping_size ||= splitted_string[1]
     end
