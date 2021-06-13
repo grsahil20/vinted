@@ -1,7 +1,7 @@
 require 'time'
 module Vinted
   class  Shipment
-    MATCH_REGEXP = /\d\d\d\d-\d\d\-\d\d\ [SLM] (MR|LP)/
+
     DATE_TIME_FORMAT = '%Y-%m-%d'
 
     attr_reader :str
@@ -10,29 +10,30 @@ module Vinted
     end
 
     def valid?
-      valid_date? && str.match(MATCH_REGEXP).to_s === str
+      true
     end
 
     def shipment_date
-      return nil unless valid?
       @shipment_date ||= Time.strptime(splitted_string[0], DATE_TIME_FORMAT)
     end
 
     def shipping_size
-      return nil unless valid?
-      splitted_string[1]
+      @shipping_size ||= splitted_string[1]
     end
 
     def shipping_provider
-      return nil unless valid?
-      splitted_string[2]
+      @shipping_provider ||= splitted_string[2]
+    end
+
+    def shipment_cost
+      @shipment_cost ||= ShipmentCost.new(self).cost
+    end
+
+    def print
+      str
     end
 
     private
-
-    def valid_date?(format = DATE_TIME_FORMAT )
-      Time.strptime(splitted_string[0], DATE_TIME_FORMAT) rescue false
-    end
 
     def splitted_string
       @splitted_string ||= str.split(' ')
