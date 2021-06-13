@@ -3,8 +3,8 @@ module Vinted
   class ShipmentCost
 
     DEFAULT_SHIPPING_COSTS = {
-      LP: { S: 1.50, L: 4.90, M: 6.90 },
-      MR: { S: 2, L: 3, M: 4 }
+      LP: { S: 1.50, M: 4.90, L: 6.90 },
+      MR: { S: 2.00, M: 3.00, L: 4.00 }
     }
 
     attr_reader :shipment
