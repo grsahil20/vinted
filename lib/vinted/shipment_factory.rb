@@ -1,11 +1,15 @@
+require_relative "./invalid_shipment"
+require_relative "./shipment"
+
 require 'time'
 module Vinted
   class ShipmentFactory
 
     VALID_STRING_REGEXP = /\d\d\d\d-\d\d\-\d\d\ [SLM] (MR|LP)/
-    DATE_TIME_FORMAT = '%Y-%m-%d'
+    DATE_TIME_FORMAT = '%Y-%m-%d'.freeze
 
     attr_reader :str
+
     def initialize(str)
       @str = str
     end
@@ -21,7 +25,7 @@ module Vinted
     end
 
     def valid_string?
-      str.match(VALID_STRING_REGEXP).to_s === str
+      str.match(VALID_STRING_REGEXP).to_s == str
     end
 
     def shipment_class
