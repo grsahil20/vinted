@@ -15,12 +15,12 @@ module Vinted
     end
 
     def shipment_date
-      @shipment_date ||= Time.strptime(splitted_string[0], DATE_TIME_FORMAT)
+      @date ||= Time.strptime(splitted_string[0], DATE_TIME_FORMAT)
     end
     alias_method :date, :shipment_date
 
     def shipment_month
-      @shipment_month ||= shipment_date.month
+      @month ||= shipment_date.month
     end
     alias_method :month, :shipment_month
 
@@ -30,19 +30,19 @@ module Vinted
     alias_method :size, :shipping_size
 
     def shipping_provider
-      @shipping_provider ||= splitted_string[2]
+      @provider ||= splitted_string[2]
     end
     alias_method :provider, :shipping_provider
 
     def shipment_cost
-      @shipment_cost ||= ShipmentCost.new(self).cost
+      @cost ||= ShipmentCost.new(self).cost
     end
     alias_method :cost, :shipment_cost
 
     private
 
     def splitted_string
-      @splitted_string ||= str.split(' ')
+      splitted_string ||= str.split(' ')
     end
   end
 end

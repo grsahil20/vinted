@@ -3,15 +3,22 @@ require_relative "./shipment_cost"
 module Vinted
   class ShipmentsDiscountCalculator
 
-    attr_accessor :shipments, :result
+    MAX_MONTHLY_DISCOUNT = 10.00
+    attr_reader :result
 
-    def initialize(shipments:)
-      @shipments = shipments
+    def initialize(max_monthly_discount: MAX_MONTHLY_DISCOUNT)
+      @max_monthly_discount = max_monthly_discount
+      @shipments = []
       @result = {}
+      init_size_based_minimum_pricings
+    end
+
+    def add_shipment(shipment)
+      @shipments << shipment
     end
 
     def process
-      init_size_based_minimum_pricings
+      init_max_monthly_discount_tracker
       init_monthly_shipment_tracker
       calculate_discounts
     end
@@ -22,11 +29,26 @@ module Vinted
 
     private
 
+
     def calculate_discounts
-      shipments.each do |shipment|
-        discount = caluculate_shiping_discount(shipment)
+      @shipments.each do |shipment|
+        discount = 0.0
+        shipment_month = shipment.month
+        available_discount = available_discount(shipment_month)
+        unless available_discount.zero?
+          discount = [caluculate_shiping_discount(shipment), available_discount].compact.min
+          reduce_discount(shipment_month, discount)
+        end
         @result[shipment.object_id.to_s] = discount
       end
+    end
+
+    def available_discount(month)
+      @monthly_discount_tracker[month.to_s]
+    end
+
+    def reduce_discount(month, discount)
+      @monthly_discount_tracker[month.to_s] = (available_discount(month) - discount).round(2)
     end
 
     def caluculate_shiping_discount(shipment)
@@ -68,8 +90,15 @@ module Vinted
       end
     end
 
+    def init_max_monthly_discount_tracker
+      @monthly_discount_tracker = {}
+      shipment_months.each do |month|
+        @monthly_discount_tracker[month.to_s] = @max_monthly_discount
+      end
+    end
+
     def shipment_months
-      shipments.map {|s| s.month}.uniq
+      @shipments.map {|s| s.month}.uniq
     end
 
     def size_l_based_discount(shipment)

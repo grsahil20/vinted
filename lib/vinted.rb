@@ -1,14 +1,12 @@
 require_relative './vinted/shipment_factory'
-require_relative './vinted/shipment_cost'
+require_relative './vinted/shipments_processor'
 
 module Vinted
   DEFAULT_FILE_NAME = 'input.txt'
 
   def self.run(file_name: )
     shipments = create_shipments_from_file(file_name)
-    shipments.each do |shipment|
-      p shipment
-    end
+    Vinted::ShipmentsProcessor.new(shipments: shipments).process
   end
 
   def self.create_shipments_from_file(file_name)
