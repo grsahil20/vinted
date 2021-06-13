@@ -8,9 +8,7 @@ module Vinted
 
   def self.run(file_name: )
     shipments = create_shipments_from_file(file_name)
-    shipments.each do |shipment|
-      p shipment.print
-    end
+    process_shipments(shipments)
   end
 
   def self.create_shipments_from_file(file_name)
@@ -19,5 +17,9 @@ module Vinted
     result = file.map { |line| Vinted::ShipmentFactory.new(line.strip.chomp).shipment }
     file.close
     return result
+  end
+
+  def self.process_shipments(shipments)
+    Vinted::ShipmentsProcessor.new(shipments).process
   end
 end

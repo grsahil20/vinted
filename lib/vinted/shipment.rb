@@ -29,10 +29,6 @@ module Vinted
       @shipment_cost ||= ShipmentCost.new(self).cost
     end
 
-    def print
-      str
-    end
-
     private
 
     def splitted_string
