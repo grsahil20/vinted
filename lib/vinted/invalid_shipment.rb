@@ -1,6 +1,7 @@
 module Vinted
   class InvalidShipment
     attr_reader :str
+
     def initialize(str)
       @str = str
     end
@@ -8,6 +9,5 @@ module Vinted
     def valid?
       false
     end
-
   end
 end
