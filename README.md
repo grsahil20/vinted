@@ -1,6 +1,15 @@
 # vinted
 https://gist.github.com/vintedEngineering/7a24d2bb2ef4189447c6b938604ab030
 
+## How to Run Solution (Problem Details Below)
+1. `rake test` : Run test cases
+2. `rake run` : Runs the default [input.txt](https://github.com/grsahil20/vinted/blob/master/seed/input.txt) file placed in seeds folder
+3. To run some specific test cases add a new file into seeds folder with content. For example sake we assume the name will be `shipments.txt`. To run the module against the content of the mentioned file `run rake["shipments.txt"]`
+
+
+
+
+
 # Backend Homework Assignment
 
 Code Philosophy
